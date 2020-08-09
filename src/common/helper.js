@@ -1,5 +1,21 @@
+const kafka = require('kafka-node')
 const errors = require('./errors')
 const _ = require('lodash')
+const promise = require('bluebird')
+
+/**
+ * @returns {object} kafka Client Instance
+ */
+let kafkaClient
+function getKafkaClient() {
+    if(!kafkaClient) {
+        kafkaClient= new kafka.KafkaClient()
+    }
+    return kafkaClient
+}
+
+
+
 /**
  * wrap async function to standard express function
  * @param {Function} fn the async function
@@ -35,7 +51,31 @@ function autoWrapExpress(obj) {
     return obj
 }
 
+/**
+ * Create Kafka Topic
+ * @param {Object} Object the topic object with config
+ * 
+ */
+function createTopics(topic) {
+    const client = getKafkaClient()
+    const promisedCreateTopic=promise.promisify(client.createTopics, {context: client})
+    const res=promisedCreateTopic(topic)
+    console.log(res)
+    return res
+}
+
+ function getAllTopics() {
+    const client=getKafkaClient()
+    const admin=new kafka.Admin(client)
+    const promisedList = promise.promisify(admin.listTopics,{context: admin})
+    const res= promisedList()
+    return res
+}
+
 module.exports = {
     wrapExpress,
     autoWrapExpress,
+    getKafkaClient,
+    getAllTopics,
+    createTopics
 }
