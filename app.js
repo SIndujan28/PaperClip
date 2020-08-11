@@ -11,6 +11,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const HttpStatus = require('http-status-codes')
 const logger = require('./src/common/logger')
+const helper = require('./src/common/helper')
 
 // setup express app
 const app = express()
@@ -67,6 +68,9 @@ app.use((err, req, res, next) => {
 
 app.listen(app.get('port'), () => {
   logger.info(`Express server listening on port ${app.get('port')}`)
+  const consumer = helper.getConsumer()
+  consumer.on('message',(msg) => console.log(msg))
+
 })
 
 module.exports = app
