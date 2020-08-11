@@ -56,12 +56,17 @@ function autoWrapExpress(obj) {
  * @param {Object} Object the topic object with config
  * 
  */
-function createTopics(topic) {
+function createTopics(topics) {
     const client = getKafkaClient()
-    const promisedCreateTopic=promise.promisify(client.createTopics, {context: client})
-    const res=promisedCreateTopic(topic)
-    console.log(res)
-    return res
+    const admin = new kafka.Admin(client)
+    return new Promise((resolve,reject) => {
+        admin.createTopics(topics,(_,res) => {
+            if(res) {
+                return reject(res)
+            }
+            return resolve({})
+        })
+    })
 }
 
  function getAllTopics() {
@@ -72,10 +77,18 @@ function createTopics(topic) {
     return res
 }
 
+function getConsumer() {
+    const client=getKafkaClient()
+    const Consumer = kafka.Consumer
+    const consumer = new Consumer(client,[{topic:'test'}])
+    return consumer
+}
+
 module.exports = {
     wrapExpress,
     autoWrapExpress,
     getKafkaClient,
     getAllTopics,
-    createTopics
+    createTopics,
+    getConsumer
 }
