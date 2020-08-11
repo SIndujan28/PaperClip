@@ -5,8 +5,8 @@ module.exports = {
             method: 'getTopics',
         },
     },
-    '/top': {
-        get: {
+    '/topics': {
+        post: {
             controller: 'topicsController',
             method: 'createTopics'
         }

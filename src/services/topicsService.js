@@ -6,14 +6,16 @@ const logger = require('../common/logger')
     return results
 }
 
-function createTopics() {
-    const results = helper.createTopics([{
-        topic: 'topic1',
-        partitions: 1,
-        replicationFactor: 1
-      }])
-    return results
+async function createTopics(data) {
+    try{
+        const results =await helper.createTopics(data)
+          return results
+    }catch(e) {
+        return  new errors.BadRequestError(`${e.map(i => i.error)}`)
+    }
 }
+
+
 module.exports = {
     getTopics,
     createTopics
