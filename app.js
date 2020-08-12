@@ -68,9 +68,13 @@ app.use((err, req, res, next) => {
 
 app.listen(app.get('port'), () => {
   logger.info(`Express server listening on port ${app.get('port')}`)
+  try {
   const consumer = helper.getConsumer()
   consumer.on('message',(msg) => console.log(msg))
-
+  consumer.on('error',(msg) => console.log(msg))
+  } catch(e) {
+    console.log(e)
+  }
 })
 
 module.exports = app
