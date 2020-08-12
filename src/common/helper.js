@@ -8,10 +8,18 @@ const promise = require('bluebird')
  */
 let kafkaClient
 function getKafkaClient() {
-    if(!kafkaClient) {
-        kafkaClient= new kafka.KafkaClient()
-    }
-    return kafkaClient
+        if(!kafkaClient) {
+                kafkaClient= new kafka.KafkaClient({
+                    connectTimeout:2000,
+                    requestTimeout:2000,
+                    autoConnect: true
+                })
+                kafkaClient.on('ready',() => {
+                    console.log('kafka client is ready')
+                })
+                return kafkaClient
+            }
+        return kafkaClient
 }
 
 
@@ -70,8 +78,8 @@ function createTopics(topics) {
 }
 
  function getAllTopics() {
-    const client=getKafkaClient()
-    const admin=new kafka.Admin(client)
+        const client=getKafkaClient()
+        const admin=new kafka.Admin(client)
         return new Promise((resolve,reject) => {
             admin.listTopics((err,res) => {
                 if(res) {
@@ -83,10 +91,16 @@ function createTopics(topics) {
 }
 
 function getConsumer() {
-    const client=getKafkaClient()
-    const Consumer = kafka.Consumer
-    const consumer = new Consumer(client,[{topic:'test'}])
-    return consumer
+    try {
+        const client=getKafkaClient()
+        const Consumer = kafka.Consumer
+        const consumer = new Consumer(client,[{topic:'test'}])
+        return consumer
+    }catch(e) {
+        console.log(e)
+        return e
+    }
+  
 }
 
 module.exports = {
