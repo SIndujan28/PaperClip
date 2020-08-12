@@ -1,9 +1,15 @@
 const errors = require('../common/errors')
 const helper = require('../common/helper')
 const logger = require('../common/logger')
- function getTopics() {
-    const results = helper.getAllTopics()
-    return results
+ 
+
+async function getTopics() {
+     try {
+        const results =await helper.getAllTopics()
+        return results
+     }catch(e) {
+        return  new errors.BadRequestError(`bad kafka error: ${e}`)
+    }
 }
 
 async function createTopics(data) {

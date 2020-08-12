@@ -72,9 +72,14 @@ function createTopics(topics) {
  function getAllTopics() {
     const client=getKafkaClient()
     const admin=new kafka.Admin(client)
-    const promisedList = promise.promisify(admin.listTopics,{context: admin})
-    const res= promisedList()
-    return res
+        return new Promise((resolve,reject) => {
+            admin.listTopics((err,res) => {
+                if(res) {
+                    return resolve(res)
+                }
+                return reject(err)
+            })
+        })
 }
 
 function getConsumer() {

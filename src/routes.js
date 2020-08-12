@@ -4,11 +4,9 @@ module.exports = {
             controller: 'topicsController',
             method: 'getTopics',
         },
-    },
-    '/topics': {
         post: {
             controller: 'topicsController',
             method: 'createTopics'
         }
-    }
+    },
 }
