@@ -9,5 +9,9 @@ module.exports = {
      
     // health check timeout in milliseconds
     HEALTH_CHECK_TIMEOUT: process.env.HEALTH_CHECK_TIMEOUT || 3000,
-    
+    esConfig: {
+      HOST: process.env.ES_HOST || 'http://localhost:9200',
+      ES_INDEX: process.env.ES_INDEX || 'libraryqaz',
+      ES_TYPE: process.env.ES_TYPE || 'doc'
+    }
   }
