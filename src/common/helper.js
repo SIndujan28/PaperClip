@@ -1,7 +1,10 @@
 const kafka = require('kafka-node')
 const errors = require('./errors')
+const config = require('config')
 const _ = require('lodash')
 const promise = require('bluebird')
+const { Client } = require('@elastic/elasticsearch')
+
 
 /**
  * @returns {object} kafka Client Instance
@@ -22,7 +25,23 @@ function getKafkaClient() {
         return kafkaClient
 }
 
-
+/**
+ * elasticsearch client mapping
+ */
+const esClient={}
+/**
+ * 
+ * @returns {Object} elasticsearch instance 
+ */
+function getESClient() {
+    const esHost = config.get('esConfig.HOST')
+    if(!esClient['client']) {
+        esClient['client'] = new Client({
+            node: esHost,
+        })
+    }
+    return esClient['client']
+}
 
 /**
  * wrap async function to standard express function
@@ -109,5 +128,6 @@ module.exports = {
     getKafkaClient,
     getAllTopics,
     createTopics,
-    getConsumer
+    getConsumer,
+    getESClient
 }
