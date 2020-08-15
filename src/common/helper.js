@@ -113,7 +113,7 @@ function getConsumer() {
     try {
         const client=getKafkaClient()
         const Consumer = kafka.Consumer
-        const consumer = new Consumer(client,[{topic:'test'}])
+        const consumer = new Consumer(client,[{topic:config.get('KAFKA_TOPIC')}])
         return consumer
     }catch(e) {
         console.log(e)
