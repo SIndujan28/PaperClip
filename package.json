@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node --trace-warnings app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ME",
@@ -21,6 +21,7 @@
     "joi": "^17.1.1",
     "kafka-node": "^5.0.0",
     "lodash": "^4.17.19",
+    "uuid": "^8.3.0",
     "winston": "^3.3.3"
   }
 }
