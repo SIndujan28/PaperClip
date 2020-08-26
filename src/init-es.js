@@ -26,7 +26,10 @@ async function run() {
             body: {
                 mappings: {
                         properties: {
-                            status: { type: 'text' },
+                            name: { type: 'text' },
+                            path: { type: 'text'},
+                            version: { type: 'text'},
+                            keywords: { type: 'text'}
                           }
                 }
               }
