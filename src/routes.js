@@ -9,4 +9,10 @@ module.exports = {
             method: 'createTopics'
         }
     },
+    '/books': {
+        get: {
+            controller: 'searchController',
+            method: 'searchBooks'
+        }
+    }
 }
