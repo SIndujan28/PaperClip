@@ -12,7 +12,7 @@ const cors = require('cors')
 const HttpStatus = require('http-status-codes')
 const logger = require('./src/common/logger')
 const helper = require('./src/common/helper')
-const {handler} = require('./src/services/processorService')
+const { handler } = require('./src/services/processorService')
 
 // setup express app
 const app = express()
@@ -70,10 +70,10 @@ app.use((err, req, res, next) => {
 app.listen(app.get('port'), () => {
   logger.info(`Express server listening on port ${app.get('port')}`)
   try {
-  const consumer = helper.getConsumer()
-  consumer.on('message',(msg) => handler(msg))
-  consumer.on('error',(msg) => console.log(msg))
-  } catch(e) {
+    const consumer = helper.getConsumer()
+    consumer.on('message', (msg) => handler(msg))
+    consumer.on('error', (msg) => console.log(msg))
+  } catch (e) {
     console.log(e)
   }
 })

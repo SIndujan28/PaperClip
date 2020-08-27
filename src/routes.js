@@ -1,18 +1,18 @@
 module.exports = {
-    '/topics': {
-        get: {
-            controller: 'topicsController',
-            method: 'getTopics',
-        },
-        post: {
-            controller: 'topicsController',
-            method: 'createTopics'
-        }
+  '/topics': {
+    get: {
+      controller: 'topicsController',
+      method: 'getTopics'
     },
-    '/books': {
-        get: {
-            controller: 'searchController',
-            method: 'searchBooks'
-        }
+    post: {
+      controller: 'topicsController',
+      method: 'createTopics'
     }
+  },
+  '/books': {
+    get: {
+      controller: 'searchController',
+      method: 'searchBooks'
+    }
+  }
 }

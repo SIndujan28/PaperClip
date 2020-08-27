@@ -6,7 +6,6 @@ const _ = require('lodash')
 const config = require('config')
 const HttpStatus = require('http-status-codes')
 const helper = require('./src/common/helper')
-const errors = require('./src/common/errors')
 const routes = require('./src/routes')
 
 /**
